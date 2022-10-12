@@ -28,16 +28,13 @@ public class Register {
 		System.out.println("Please enter the staff members password");
 		String password = App.scanner.nextLine();
 		
-		// Create new Ticket
-		User user = new User(name, email, phone, password, "Staff", 0);
+		// Create new User
+		User user = new User(App.getUsers().size(), name, email, phone, password, "Staff", 0);
 		
 		// Store ticket in Global Tickets List
 		App.storeNewUser(user);
 		
-		// TEST - List all system users
-		App.printAllUsers();
-		
-		System.out.println("An account for "+ user.getName() + "has now been created.");
+		System.out.println("An account for "+ user.getName() + " has now been created.");
 		
 		return;
 	}
