@@ -8,6 +8,7 @@ import Models.Severity;
 
 public class Ticket {
 	
+	private int id;
 	private int user_id;
 	private int technician_id;
 	private Status status;
@@ -16,9 +17,9 @@ public class Ticket {
 	private LocalDateTime created_at;
 	private Boolean archived;
 	
-	public Ticket(int user_id, Severity severity, 
+	public Ticket(int ticket_id, int user_id, Severity severity, 
 				  String description) {
-		
+		this.id = ticket_id;
 		this.user_id = user_id;
 		this.status = Status.Open;
 		this.severity = severity;
@@ -48,13 +49,10 @@ public class Ticket {
 		String description = App.scanner.nextLine();
 		
 		// Create new Ticket
-		Ticket ticket = new Ticket(1, severity, description);
+		Ticket ticket = new Ticket( App.getTickets().size() ,App.getCurrentUser().getId(), severity, description);
 		
 		// Store ticket in Global Tickets List
 		App.storeNewTicket(ticket);
-		
-		// List all tickets for testing
-		App.printAllTickets();
 		
 		System.out.println("Your ticket has been entered.");
 		

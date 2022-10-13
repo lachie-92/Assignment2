@@ -11,8 +11,8 @@ public class User {
 	private int service_desk_level;
 	
 	// User Constructor
-	public User(String name, String email, String phone, String password,String role,int service_desk_level) {
-		this.id = 1; // PLACEHOLDER
+	public User(int id, String name, String email, String phone, String password,String role,int service_desk_level) {
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
@@ -31,12 +31,28 @@ public class User {
 		return this.name;
 	}
 	
+	public String getRole() {
+		return this.role;
+	}
+	
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.password;
+	}
+	
 	// To String override for testing
 	@Override
 	public String toString() {
 		
-		return String.format("role - %s, service_desk_level - %d, name - %s, email - %s, phone - %s, password - %s", 
-				this.role, this.service_desk_level, this.name, this.email, this.phone, this.password);
+		return String.format("ID %d- role - %s, service_desk_level - %d, name - %s, email - %s, phone - %s, password - %s", 
+				this.id,this.role, this.service_desk_level, this.name, this.email, this.phone, this.password);
 	}
+
+
 	
 }

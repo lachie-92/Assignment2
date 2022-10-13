@@ -1,6 +1,5 @@
 package Menu;
 
-import java.util.Scanner;
 import Models.App;
 
 public class Technician {
@@ -22,7 +21,9 @@ public class Technician {
 				case 1 :  System.out.println("Option 1 selected."); break;
 				case 2 :  System.out.println("Option 2 selected."); break;
 				case 3 :  System.out.println("Option 3 selected."); break;
-				case 0 :  System.out.println("Returning to main menu."); break;
+				case 0 :  App.logout();
+				  		  System.out.println("Logging out and returning to main menu..."); 
+				  		  break;
 				default : System.out.println("That is not a valid option. Please select again");
 			}
 		} while(menu_selection != 0);
@@ -39,7 +40,7 @@ public class Technician {
         System.out.println("(1) View assigned tickets.");
         System.out.println("(2) View all closed tickets.");
         System.out.println("(3) View closed tickets.");
-        System.out.println("(0) Return to main menu");
+        System.out.println("(0) Log Out");
         System.out.println("----------------------");
         System.out.print("Please select an option :");
 	}

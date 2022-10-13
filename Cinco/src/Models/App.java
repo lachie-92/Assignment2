@@ -37,10 +37,21 @@ public class App {
 		return this.current_user;
 	}
 	
+	public void setCurrentUser(User user) {
+		this.current_user = user;	
+	}
+	
+	// remove current user from session.
+	public void logout() {
+		this.current_user = null;
+	}
+	
+	// Store a new ticket against the application.
 	public void storeNewTicket(Ticket ticket) {
 		this.tickets.add(ticket);
 	}
 	
+	// Store a new User against the application
 	public void storeNewUser(User user) {
 		this.users.add(user);
 	}
@@ -67,14 +78,23 @@ public class App {
 	/* Initialise Existing System Users */
 	private void init_users() {
 		
+		String default_password = "Aaaaaaaaaaa01111111111";
+		
 		// Initialise Level 1 Service Technicians
-		this.users.add(new User("Harry Styles","harry@cinco.com.au","0400 001 002","password","Technician",1));
-		this.users.add(new User("Niall Horan","niall@cinco.com.au","0400 002 002","password","Technician",1));
-		this.users.add(new User("Liam Payne","liam@cinco.com.au","0400 003 003","password","Technician",1));
+		this.users.add(new User(this.users.size(),"Harry Styles","harry@cinco.com.au","0400 001 002",default_password,"Technician",1));
+		this.users.add(new User(this.users.size(),"Niall Horan","niall@cinco.com.au","0400 002 002",default_password,"Technician",1));
+		this.users.add(new User(this.users.size(),"Liam Payne","liam@cinco.com.au","0400 003 003",default_password,"Technician",1));
 		
 		// Initialise Level 2 Service Technicians
-		this.users.add(new User("Louis Tomlinson","louis@cinco.com.au","0400 004 004","password","Technician",2));
-		this.users.add(new User("Zayn Malik","zayn@cinco.com.au","0400 005 005","password","Technician",2));
+		this.users.add(new User(this.users.size(),"Louis Tomlinson","louis@cinco.com.au","0400 004 004",default_password,"Technician",2));
+		this.users.add(new User(this.users.size(),"Zayn Malik","zayn@cinco.com.au","0400 005 005",default_password,"Technician",2));
+		
+		// Initialise a staff member
+		this.users.add(new User(this.users.size(),"Chris Warrens","chris@cinco.com.au","0400 111 111",default_password,"Staff",0));
 		
 	}
+
+	
+
+	
 }
