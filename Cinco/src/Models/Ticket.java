@@ -54,10 +54,8 @@ public class Ticket {
 	private void assignServiceDesk() {
 		if (this.severity.equals(Severity.High)) {
 			this.serviceDesk = 2;
-			System.out.println("Service desk: 2");
 		} else {		
 			this.serviceDesk = 1;
-			System.out.println("Service desk: 1");
 		}
 	}
 

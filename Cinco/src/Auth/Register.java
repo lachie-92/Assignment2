@@ -1,6 +1,6 @@
 package Auth;
 import Models.App;
-
+import Models.Role;
 import Models.User;
 
 public class Register {
@@ -29,7 +29,7 @@ public class Register {
 		String password = App.scanner.nextLine();
 		
 		// Create new User
-		User user = new User(App.getUsers().size(), name, email, phone, password, "Staff", 0);
+		User user = new User(App.getUsers().size(), name, email, phone, password, Role.Staff, 0);
 		
 		// Store ticket in Global Tickets List
 		App.storeNewUser(user);
