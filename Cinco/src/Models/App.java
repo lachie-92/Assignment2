@@ -29,6 +29,17 @@ public class App {
 		return this.users;
 	}
 	
+	public List<User> getTechnicians() {
+		List<User> users = getUsers();
+		List<User> technicians = new ArrayList<User>();
+		
+		for(User u : users) {
+			if(u.getRole() == "Technician")
+				technicians.add(u);
+		}
+		return technicians;
+	}
+	
 	public List<Ticket> getTickets() {
 		return this.tickets;
 	}
@@ -54,6 +65,19 @@ public class App {
 	// Store a new User against the application
 	public void storeNewUser(User user) {
 		this.users.add(user);
+	}
+	
+	public void assignTicketToTechnician(Ticket ticket) {
+		List<User> technicians = getTechnicians();		
+		int numTickets = technicians.get(0).getTickets().size(); 
+		
+		for(User t : technicians) {
+			if(t.getTickets().size() < numTickets) {
+				numTickets = t.getTickets().size();
+				ticket.setTechnicianId(t.getId());
+			}
+			t.addTicket(ticket);
+		}
 	}
 
 	// For Testing - Itterates over tickets Arraylist and prints each ticket details

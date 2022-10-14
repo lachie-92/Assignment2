@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.ArrayList;
+
 public class User {
 	
 	private int id;
@@ -9,6 +11,7 @@ public class User {
 	private String password;
 	private String role;
 	private int service_desk_level;
+	private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 	
 	// User Constructor
 	public User(int id, String name, String email, String phone, String password,String role,int service_desk_level) {
@@ -43,6 +46,14 @@ public class User {
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.password;
+	}
+	
+	public ArrayList<Ticket> getTickets() {
+		return this.tickets;
+	}
+	
+	public void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
 	}
 	
 	// To String override for testing

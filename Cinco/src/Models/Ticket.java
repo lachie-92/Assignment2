@@ -27,7 +27,6 @@ public class Ticket {
 		this.description = description;
 		this.created_at = LocalDateTime.now();
 		this.archived = false;
-		assignTicketToTechnician();
 		assignServiceDesk();
 	}
 	
@@ -36,8 +35,8 @@ public class Ticket {
 		return this.user_id;
 	}
 	
-	private void assignTicketToTechnician() {
-		this.technician_id = 1;
+	public void setTechnicianId(int id) {
+		this.technician_id = id;
 	}
 
 	private void assignServiceDesk() {
@@ -70,6 +69,9 @@ public class Ticket {
 
 		// Store ticket in Global Tickets List
 		App.storeNewTicket(ticket);
+		
+		// Assign Ticket to technician with least tickets
+		App.assignTicketToTechnician(ticket);
 
 		System.out.println("Your ticket has been entered.");
 
