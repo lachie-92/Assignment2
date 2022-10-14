@@ -96,6 +96,20 @@ public class Ticket {
 				this.status, this.severity, this.serviceDesk, this.description, this.created_at);
 	}
 
+	public LocalDateTime getCreatedAt() {
+		
+		return this.created_at;
+	}
+
+	public void archiveTicket() {
+		this.archived = true;
+		
+	}
+
+	public Status getStatus() {
+		return this.status;
+	}
+
 
 
 

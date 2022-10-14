@@ -11,6 +11,8 @@ public class Main {
 	public static void menu(App App) {
 		int menu_selection = 1;
 		
+		App.start_BGS();
+		
 		do {
 			// Print main menu
 			Main.print_menu();
