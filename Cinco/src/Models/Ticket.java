@@ -16,6 +16,7 @@ public class Ticket {
 	private int serviceDesk;
 	private String description;
 	private LocalDateTime created_at;
+	private LocalDateTime closed_at;
 	private Boolean archived;
 
 	public Ticket(int ticket_id, int user_id, Severity severity, 
@@ -95,10 +96,16 @@ public class Ticket {
 		return String.format("Status - %s, Severity - %s, Service Desk - %s, Description - %s, Created - %s", 
 				this.status, this.severity, this.serviceDesk, this.description, this.created_at);
 	}
-
-	public LocalDateTime getCreatedAt() {
+	
+	public void closeTicket() {
 		
-		return this.created_at;
+		this.status = Status.Closed;
+		this.closed_at = LocalDateTime.now();
+	}
+
+	public LocalDateTime getClosedTime() {
+		
+		return this.closed_at;
 	}
 
 	public void archiveTicket() {

@@ -79,7 +79,7 @@ public class App {
 				for (Ticket t : closedTickets) {
 
 					// compares current time to tickets creation time, if older than 24 hours
-					if (t.getCreatedAt().until(LocalDateTime.now(), ChronoUnit.DAYS) >= 1) {
+					if (t.getClosedTime().until(LocalDateTime.now(), ChronoUnit.DAYS) >= 1) {
 
 						t.archiveTicket();
 					}
