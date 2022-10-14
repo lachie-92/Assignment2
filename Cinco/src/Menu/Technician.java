@@ -1,11 +1,12 @@
 package Menu;
 
 import Models.App;
+import Models.User;
 
 public class Technician {
 	
 	public static void menu(App App) {
-		
+		User currentUser = App.getCurrentUser();
 		int menu_selection = 1;
 
 		do {
@@ -18,7 +19,7 @@ public class Technician {
 			
 			// Action selection
 			switch(menu_selection) { 
-				case 1 :  System.out.println("Option 1 selected."); break;
+				case 1 :  System.out.println("Option 1 selected."); currentUser.printTickets(); break;
 				case 2 :  System.out.println("Option 2 selected."); break;
 				case 3 :  System.out.println("Option 3 selected."); break;
 				case 0 :  App.logout();

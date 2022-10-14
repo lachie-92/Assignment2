@@ -9,12 +9,12 @@ public class User {
 	private String email;
 	private String phone;
 	private String password;
-	private String role;
+	private Role role;
 	private int service_desk_level;
 	private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 	
 	// User Constructor
-	public User(int id, String name, String email, String phone, String password,String role,int service_desk_level) {
+	public User(int id, String name, String email, String phone, String password, Role role,int service_desk_level) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -34,8 +34,12 @@ public class User {
 		return this.name;
 	}
 	
-	public String getRole() {
+	public Role getRole() {
 		return this.role;
+	}
+	
+	public int getServiceDeskLevel() {
+		return this.service_desk_level;
 	}
 	
 	public String getEmail() {
@@ -54,6 +58,11 @@ public class User {
 	
 	public void addTicket(Ticket ticket) {
 		this.tickets.add(ticket);
+	}
+	
+	public void printTickets() {
+		for(Ticket t : tickets) 
+			System.out.println(t.getTechnicianId() + " " + t.getDescription());
 	}
 	
 	// To String override for testing

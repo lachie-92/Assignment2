@@ -4,6 +4,7 @@ package Auth;
 import Menu.Staff;
 import Menu.Technician;
 import Models.App;
+import Models.Role;
 import Models.User;
 
 public class Login {
@@ -47,8 +48,8 @@ public class Login {
             	Login = true;
             	// Route user to their menu
             	switch(App.getCurrentUser().getRole()) {
-            		case "Staff" : Staff.menu(App); break;
-            		case "Technician" : Technician.menu(App); break;
+            		case Staff : Staff.menu(App); break;
+            		case Technician : Technician.menu(App); break;
             		default :
             			System.out.println("This user does not have a current role and therefore cannot be logged in. Please contact IT Department");
             			App.logout();

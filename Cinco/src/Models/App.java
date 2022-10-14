@@ -1,6 +1,8 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,12 +31,23 @@ public class App {
 		return this.users;
 	}
 	
-	public List<User> getTechnicians() {
+	public List<User> getLvl1Technicians() {
 		List<User> users = getUsers();
 		List<User> technicians = new ArrayList<User>();
 		
 		for(User u : users) {
-			if(u.getRole() == "Technician")
+			if(u.getRole().equals(Role.Technician) && u.getServiceDeskLevel() == 1)
+				technicians.add(u);
+		}
+		return technicians;
+	}
+	
+	public List<User> getLvl2Technicians() {
+		List<User> users = getUsers();
+		List<User> technicians = new ArrayList<User>();
+		
+		for(User u : users) {
+			if(u.getRole().equals(Role.Technician) && u.getServiceDeskLevel() == 2)
 				technicians.add(u);
 		}
 		return technicians;
@@ -68,16 +81,19 @@ public class App {
 	}
 	
 	public void assignTicketToTechnician(Ticket ticket) {
-		List<User> technicians = getTechnicians();		
-		int numTickets = technicians.get(0).getTickets().size(); 
+		List<User> technicians;
 		
-		for(User t : technicians) {
-			if(t.getTickets().size() < numTickets) {
-				numTickets = t.getTickets().size();
-				ticket.setTechnicianId(t.getId());
-			}
-			t.addTicket(ticket);
-		}
+		if(ticket.getServiceDesk() == 1) {
+			technicians = getLvl1Technicians();	
+		} else {
+			technicians = getLvl2Technicians();	
+		}	
+		
+		User technician =  Collections.min(technicians, Comparator.comparing(s -> s.getTickets().size()));
+		ticket.setTechnicianId(technician.getId());
+		technician.addTicket(ticket);
+		
+		System.out.println("Ticket assigned to " + ticket.getTechnicianId());
 	}
 
 	// For Testing - Itterates over tickets Arraylist and prints each ticket details
@@ -121,16 +137,16 @@ public class App {
 		String default_password = "Aaaaaaaaaaa01111111111";
 		
 		// Initialise Level 1 Service Technicians
-		this.users.add(new User(this.users.size(),"Harry Styles","harry@cinco.com.au","0400 001 002",default_password,"Technician",1));
-		this.users.add(new User(this.users.size(),"Niall Horan","niall@cinco.com.au","0400 002 002",default_password,"Technician",1));
-		this.users.add(new User(this.users.size(),"Liam Payne","liam@cinco.com.au","0400 003 003",default_password,"Technician",1));
+		this.users.add(new User(this.users.size(),"Harry Styles","harry@cinco.com.au","0400 001 002",default_password,Role.Technician,1));
+		this.users.add(new User(this.users.size(),"Niall Horan","niall@cinco.com.au","0400 002 002",default_password,Role.Technician,1));
+		this.users.add(new User(this.users.size(),"Liam Payne","liam@cinco.com.au","0400 003 003",default_password,Role.Technician,1));
 		
 		// Initialise Level 2 Service Technicians
-		this.users.add(new User(this.users.size(),"Louis Tomlinson","louis@cinco.com.au","0400 004 004",default_password,"Technician",2));
-		this.users.add(new User(this.users.size(),"Zayn Malik","zayn@cinco.com.au","0400 005 005",default_password,"Technician",2));
+		this.users.add(new User(this.users.size(),"Louis Tomlinson","louis@cinco.com.au","0400 004 004",default_password,Role.Technician,2));
+		this.users.add(new User(this.users.size(),"Zayn Malik","zayn@cinco.com.au","0400 005 005",default_password,Role.Technician,2));
 		
 		// Initialise a staff member
-		this.users.add(new User(this.users.size(),"Chris Warrens","chris@cinco.com.au","0400 111 111",default_password,"Staff",0));
+		this.users.add(new User(this.users.size(),"Chris Warrens","chris@cinco.com.au","0400 111 111",default_password,Role.Staff,0));
 		
 	}
 

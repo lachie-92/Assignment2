@@ -35,6 +35,18 @@ public class Ticket {
 		return this.user_id;
 	}
 	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public int getTechnicianId() {
+		return this.technician_id;
+	}
+	
+	public int getServiceDesk() {
+		return this.serviceDesk;
+	}
+	
 	public void setTechnicianId(int id) {
 		this.technician_id = id;
 	}
