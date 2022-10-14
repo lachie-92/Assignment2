@@ -65,6 +65,22 @@ public class App {
 		}
 	}
 	
+	//Print all tickets for the currently logged in Staff Member
+	public void printStaffTickets(int userID) {
+		System.out.println("All Your Open Tickets");
+        System.out.println("----------------------");
+        if(this.tickets.size() != 0) {
+        	for(int i = 0; i < this.tickets.size(); i++) {
+        		if(this.tickets.get(i).getUserID() == this.current_user.getId()) {
+        			System.out.println("["+i+"] - "+this.tickets.get(i).toString());
+        		}
+    		}
+        } else {
+        	System.out.println("You have no open tickets");
+        }
+		
+	}
+	
 	// For Testing - Itterates over users Arraylist and prints each user details
 	public void printAllUsers() {
 		System.out.println("Testing all system tickets");
