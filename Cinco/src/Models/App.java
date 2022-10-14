@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 
@@ -29,28 +30,6 @@ public class App {
 	
 	public List<User> getUsers() {
 		return this.users;
-	}
-	
-	public List<User> getLvl1Technicians() {
-		List<User> users = getUsers();
-		List<User> technicians = new ArrayList<User>();
-		
-		for(User u : users) {
-			if(u.getRole().equals(Role.Technician) && u.getServiceDeskLevel() == 1)
-				technicians.add(u);
-		}
-		return technicians;
-	}
-	
-	public List<User> getLvl2Technicians() {
-		List<User> users = getUsers();
-		List<User> technicians = new ArrayList<User>();
-		
-		for(User u : users) {
-			if(u.getRole().equals(Role.Technician) && u.getServiceDeskLevel() == 2)
-				technicians.add(u);
-		}
-		return technicians;
 	}
 	
 	public List<Ticket> getTickets() {
@@ -81,19 +60,27 @@ public class App {
 	}
 	
 	public void assignTicketToTechnician(Ticket ticket) {
-		List<User> technicians;
+		List<User> technicians = users.stream()
+									  .filter(x -> x.getRole() == Role.Technician)
+									  .collect(Collectors.toList());
 		
+		// Find technicians that match ticket's service level
 		if(ticket.getServiceDesk() == 1) {
-			technicians = getLvl1Technicians();	
+			technicians = technicians.stream()
+									 .filter(x -> x.getServiceDeskLevel() == 1)
+									 .collect(Collectors.toList());	
 		} else {
-			technicians = getLvl2Technicians();	
+			technicians = technicians.stream()
+									 .filter(x -> x.getServiceDeskLevel() == 2)
+									 .collect(Collectors.toList());	
 		}	
 		
+		// Find technician with the least num of tickets
 		User technician =  Collections.min(technicians, Comparator.comparing(s -> s.getTickets().size()));
 		ticket.setTechnicianId(technician.getId());
 		technician.addTicket(ticket);
 		
-		System.out.println("Ticket assigned to " + ticket.getTechnicianId());
+		System.out.println("Ticket assigned to " + technician.getName());
 	}
 
 	// For Testing - Itterates over tickets Arraylist and prints each ticket details
@@ -146,11 +133,7 @@ public class App {
 		this.users.add(new User(this.users.size(),"Zayn Malik","zayn@cinco.com.au","0400 005 005",default_password,Role.Technician,2));
 		
 		// Initialise a staff member
-		this.users.add(new User(this.users.size(),"Chris Warrens","chris@cinco.com.au","0400 111 111",default_password,Role.Staff,0));
-		
+		this.users.add(new User(this.users.size(),"Chris Warrens","chris@cinco.com.au","0400 111 111",default_password,Role.Staff,0));		
 	}
-
-	
-
 	
 }
