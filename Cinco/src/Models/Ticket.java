@@ -29,6 +29,11 @@ public class Ticket {
 		assignTicketToTechnician();
 	}
 	
+	public int getUserID() {
+		// TODO Auto-generated method stub
+		return this.user_id;
+	}
+	
 	private void assignTicketToTechnician() {
 		this.technician_id = 1;
 	}

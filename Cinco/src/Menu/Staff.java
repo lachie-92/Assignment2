@@ -22,7 +22,7 @@ public class Staff {
 			// Action selection
 			switch(menu_selection) { 
 				case 1 :  Ticket.create(App); break;
-				case 2 :  System.out.println("Option 2 selected."); break;
+				case 2 :  App.printStaffTickets(1); break;
 				case 3 :  System.out.println("Option 3 selected."); break;
 				case 0 :  App.logout();
 						  System.out.println("Logging out and returning to main menu..."); 
