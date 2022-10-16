@@ -44,6 +44,10 @@ public class Ticket {
 		return this.technician_id;
 	}
 	
+	public Severity getSeverity() {
+		return this.severity;
+	}
+	
 	public int getServiceDesk() {
 		return this.serviceDesk;
 	}
@@ -58,6 +62,37 @@ public class Ticket {
 		} else {		
 			this.serviceDesk = 1;
 		}
+	}
+	
+	public void setSeverity(App App) {
+		System.out.print("\r\n");
+		System.out.println("----------------------");
+		System.out.println("Edit Ticket Severity");
+		System.out.println("----------------------");
+
+		// Request severity from user
+		System.out.println("Please select a severity of the issue from (1) Low, (2) Medium, (3) High by entering the corresponding number:");
+		Severity severity = Severity.values()[App.scanner.nextInt() - 1];
+		System.out.println(severity);
+		// Finish buffering the next int.
+		App.scanner.nextLine();
+		
+		this.severity = severity;
+	}
+	
+	public void setStatus(App App) {
+		System.out.print("\r\n");
+		System.out.println("----------------------");
+		System.out.println("Edit Ticket Status");
+		System.out.println("----------------------");
+
+		// Request severity from user
+		System.out.println("Please select a status from (1) Resolved, (2) Unresolved by entering the corresponding number:");
+		Status status = Status.values()[App.scanner.nextInt() + 1];
+		// Finish buffering the next int.
+		App.scanner.nextLine();
+		
+		this.status = status;
 	}
 
 	/* Create new ticket in system */
