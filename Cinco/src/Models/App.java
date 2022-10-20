@@ -11,6 +11,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
 
+import Auth.Encryption;
+import Seeders.TicketSeeder;
+import Seeders.UserSeeder;
+
 public class App {
 
 	private ArrayList<Ticket> tickets;
@@ -24,7 +28,8 @@ public class App {
 		this.current_user = null;
 		this.scanner = new Scanner(System.in);
 
-		init_users();
+		UserSeeder.seed_users(this);
+		TicketSeeder.seed_tickets(this);
 
 	}
 
@@ -73,7 +78,7 @@ public class App {
 				//System.out.println("Checking for closed tickets...");
 
 				// filters out tickets that are closed
-				List<Ticket> closedTickets = tickets.stream().filter(s -> s.getStatus() == Status.Closed)
+				List<Ticket> closedTickets = tickets.stream().filter(s -> s.getStatus() != Status.Open)
 						.collect(Collectors.toList());
 
 				for (Ticket t : closedTickets) {
@@ -106,65 +111,10 @@ public class App {
 		ticket.setTechnicianId(technician.getId());
 		technician.addTicket(ticket);
 
-		System.out.println("Ticket assigned to " + technician.getName());
+		return;
 	}
 
-	// For Testing - Itterates over tickets Arraylist and prints each ticket details
-	public void printAllTickets() {
-		System.out.println("Testing all system tickets");
-		System.out.println("----------------------");
-		for (int i = 0; i < this.tickets.size(); i++) {
-			System.out.println("[" + i + "] - " + this.tickets.get(i).toString());
-		}
-	}
+	
 
-	// Print all tickets for the currently logged in Staff Member
-	public void printStaffTickets(int userID) {
-		System.out.println("All Your Open Tickets");
-		System.out.println("----------------------");
-		if (this.tickets.size() != 0) {
-			for (int i = 0; i < this.tickets.size(); i++) {
-				if (this.tickets.get(i).getUserID() == this.current_user.getId()) {
-					System.out.println("[" + i + "] - " + this.tickets.get(i).toString());
-				}
-			}
-		} else {
-			System.out.println("You have no open tickets");
-		}
-
-	}
-
-	// For Testing - Itterates over users Arraylist and prints each user details
-	public void printAllUsers() {
-		System.out.println("Testing all system tickets");
-		System.out.println("----------------------");
-		for (int i = 0; i < this.users.size(); i++) {
-			System.out.println("[" + i + "] - " + this.users.get(i).toString());
-		}
-	}
-
-	/* Initialise Existing System Users */
-	private void init_users() {
-
-		String default_password = "Aaaaaaaaaaa01111111111";
-
-		// Initialise Level 1 Service Technicians
-		this.users.add(new User(this.users.size(), "Harry Styles", "harry@cinco.com.au", "0400 001 002",
-				default_password, Role.Technician, 1));
-		this.users.add(new User(this.users.size(), "Niall Horan", "niall@cinco.com.au", "0400 002 002",
-				default_password, Role.Technician, 1));
-		this.users.add(new User(this.users.size(), "Liam Payne", "liam@cinco.com.au", "0400 003 003", default_password,
-				Role.Technician, 1));
-
-		// Initialise Level 2 Service Technicians
-		this.users.add(new User(this.users.size(), "Louis Tomlinson", "louis@cinco.com.au", "0400 004 004",
-				default_password, Role.Technician, 2));
-		this.users.add(new User(this.users.size(), "Zayn Malik", "zayn@cinco.com.au", "0400 005 005", default_password,
-				Role.Technician, 2));
-
-		// Initialise a staff member
-		this.users.add(new User(this.users.size(), "Chris Warrens", "chris@cinco.com.au", "0400 111 111",
-				default_password, Role.Staff, 0));
-	}
 
 }

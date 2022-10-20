@@ -25,8 +25,19 @@ public class Validator {
 		if(Pattern.matches(password_regex, password)) {
 			return true;
 		}
-		System.out.println("This is not a valid password.");
+		System.out.println("This is not a valid password. Your password must be a minimum of 20 alphanumeric characters.");
 		return false;
+	}
+	
+	public static Boolean validateDate(String date) {
+		// Validatate
+		String password_regex = "^[a-zA-Z0-9]{20,}$";
+		// Validate that the password meets system requirements.
+		if(Pattern.matches(password_regex, date)) {
+			return true;
+		}
+		System.out.println("This is not a valid date. Please enter it as dd/mm/yy");
+		return false;	
 	}
 
 }

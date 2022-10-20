@@ -5,12 +5,9 @@ import Models.Ticket;
 
 public class Staff {
 	
-	
-	
 	public static void menu(App App) {
 
 		int menu_selection = 1;
-		
 		
 		do {
 			// Print Staff Menu
@@ -22,8 +19,7 @@ public class Staff {
 			// Action selection
 			switch(menu_selection) { 
 				case 1 :  Ticket.create(App); break;
-				case 2 :  App.printStaffTickets(1); break;
-				case 3 :  System.out.println("Option 3 selected."); break;
+				case 2 :  App.getCurrentUser().printOpenTickets(App); break;
 				case 0 :  App.logout();
 						  System.out.println("Logging out and returning to main menu..."); 
 						  break;
@@ -46,5 +42,6 @@ public class Staff {
         System.out.println("----------------------");
         System.out.print("Please select an option :");
 	}
+	
 
 }

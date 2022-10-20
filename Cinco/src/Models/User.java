@@ -1,6 +1,10 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import Auth.Encryption;
 
 public class User {
 	
@@ -19,14 +23,13 @@ public class User {
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
-		this.password = password;
+		this.password = Encryption.encryptPassword(password);
 		this.role = role;
 		this.service_desk_level = service_desk_level;
 	}
 	
-	// Get user position in array
+	// Get ID of user
 	public int getId() {
-		// Just a placeholder for now.
 		return this.id;
 	}
 	
@@ -43,13 +46,16 @@ public class User {
 	}
 	
 	public String getEmail() {
-		// TODO Auto-generated method stub
 		return this.email;
 	}
 
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
+	}
+	
+	public void setPassword(String password) {
+		// Encrypt and set the User password
+		this.password = Encryption.encryptPassword(password);
 	}
 	
 	public ArrayList<Ticket> getTickets() {
@@ -60,17 +66,37 @@ public class User {
 		this.tickets.add(ticket);
 	}
 	
-	public void printTickets() {
-		for(Ticket t : tickets) 
-			System.out.println(t.getTechnicianId() + " " + t.getDescription());
-	}
-	
-	// To String override for testing
-	@Override
-	public String toString() {
+	public void printOpenTickets(App App) {
+		// Get all Open tickets for this user
+		List<Ticket> tickets = App.getTickets()
+				  .stream()
+				  .filter(ticket -> ticket.getUserID() == this.id)
+				  .filter(ticket -> ticket.getStatus() == Status.Open)
+				  .collect(Collectors.toList());
 		
-		return String.format("ID %d- role - %s, service_desk_level - %d, name - %s, email - %s, phone - %s, password - %s", 
-				this.id,this.role, this.service_desk_level, this.name, this.email, this.phone, this.password);
+		// If there are no tickets return error 
+		if(tickets.size() == 0) {
+			Utility.print_error("There are currently no existing tickets in the system.");
+			return;
+		}
+	 
+		System.out.println();
+		System.out.println("Open Tickets : " + this.name);
+		Utility.print_hr(150);
+		System.out.println(String.format("| %-10s | %-25s | %-10s | %-25s | %-60s ", 
+							"Ticket ID","Submit Date","Severity","Assigned To", "Description"));
+		Utility.print_hr(150);
+		
+		// Iterate over each ticket and print details
+		for(Ticket t : tickets) {
+			User technician = App.getUsers().get(t.getTechnicianId());
+			t.printStaffTicket(technician.getName());
+
+		}
+		
+		Utility.print_hr(150);
+		
+		return;
 	}
 
 

@@ -2,10 +2,11 @@ package Auth;
 
 
 import Menu.Staff;
+import Menu.SystemOwner;
 import Menu.Technician;
 import Models.App;
-import Models.Role;
 import Models.User;
+import Models.Utility;
 
 public class Login {
 	
@@ -16,9 +17,9 @@ public class Login {
 		Boolean valid_email = false;
 		Boolean valid_password = false;
 
-		System.out.println("----------------------");
+		Utility.print_hr(50);
 		System.out.println("User Login");
-        System.out.println("----------------------");
+		Utility.print_hr(50);
         
         do {
         	// Prompt user for valid email and validate response.
@@ -40,6 +41,8 @@ public class Login {
                 if(password.equals("0")) return;
                 // Validate password
             	valid_password = Validator.validatePassword(password);
+            	
+            	
             } while(valid_password == false);
             
             
@@ -50,6 +53,7 @@ public class Login {
             	switch(App.getCurrentUser().getRole()) {
             		case Staff : Staff.menu(App); break;
             		case Technician : Technician.menu(App); break;
+            		case SystemOwner : SystemOwner.menu(App); break;
             		default :
             			System.out.println("This user does not have a current role and therefore cannot be logged in. Please contact IT Department");
             			App.logout();
@@ -67,8 +71,9 @@ public class Login {
 	/* Check to see if there is a match in the system for an entered email and password and if found then sets the current App user*/
 	public static Boolean verifyLogin(App App, String email, String password) {
 		for (User user : App.getUsers()) {
-			if(user.getEmail().equals(email) && user.getPassword().equals(password)) {
+			if(user.getEmail().equals(email) && user.getPassword().equals(Encryption.encryptPassword(password))) {
 				// Set current user and return true
+				System.out.println();
 				System.out.println("Welcome " + user.getName());
 				App.setCurrentUser(user);
 				return true;

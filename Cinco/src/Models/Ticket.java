@@ -1,10 +1,8 @@
 package Models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import Models.App;
-import Models.Status;
-import Models.Severity;
 
 public class Ticket {
 
@@ -19,21 +17,32 @@ public class Ticket {
 	private LocalDateTime closed_at;
 	private Boolean archived;
 
-	public Ticket(int ticket_id, int user_id, Severity severity, 
-			String description) {
+	public Ticket(int ticket_id, int user_id, Severity severity, String description) {
 		this.id = ticket_id;
 		this.user_id = user_id;
 		this.status = Status.Open;
 		this.severity = severity;
 		this.description = description;
 		this.created_at = LocalDateTime.now();
+		this.closed_at = null;
 		this.archived = false;
 		assignServiceDesk();
 	}
 	
+	public int getID() {
+		return this.id;
+	}
+	
 	public int getUserID() {
-		// TODO Auto-generated method stub
 		return this.user_id;
+	}
+	
+	public LocalDateTime getCreateDate() {
+		return this.created_at;
+	}
+	
+	public LocalDateTime getClosedTime() {
+		return this.closed_at;
 	}
 	
 	public String getDescription() {
@@ -52,8 +61,29 @@ public class Ticket {
 		return this.serviceDesk;
 	}
 	
+	public Status getStatus() {
+		return this.status;
+	}
+	
+	public Boolean getArchived() {
+		return this.archived;
+	}
+	
 	public void setTechnicianId(int id) {
 		this.technician_id = id;
+	}
+	
+	public void setSeverity(Severity severity) {
+		this.severity = severity;
+	}
+	
+	public void setStatus(Status status) {
+		this.status = status;
+		this.closed_at = (status != Status.Open)  ? LocalDateTime.now() : null;
+	}
+	
+	public void archiveTicket() {
+		this.archived = true;
 	}
 
 	private void assignServiceDesk() {
@@ -62,37 +92,6 @@ public class Ticket {
 		} else {		
 			this.serviceDesk = 1;
 		}
-	}
-	
-	public void setSeverity(App App) {
-		System.out.print("\r\n");
-		System.out.println("----------------------");
-		System.out.println("Edit Ticket Severity");
-		System.out.println("----------------------");
-
-		// Request severity from user
-		System.out.println("Please select a severity of the issue from (1) Low, (2) Medium, (3) High by entering the corresponding number:");
-		Severity severity = Severity.values()[App.scanner.nextInt() - 1];
-		System.out.println(severity);
-		// Finish buffering the next int.
-		App.scanner.nextLine();
-		
-		this.severity = severity;
-	}
-	
-	public void setStatus(App App) {
-		System.out.print("\r\n");
-		System.out.println("----------------------");
-		System.out.println("Edit Ticket Status");
-		System.out.println("----------------------");
-
-		// Request severity from user
-		System.out.println("Please select a status from (1) Resolved, (2) Unresolved by entering the corresponding number:");
-		Status status = Status.values()[App.scanner.nextInt() + 1];
-		// Finish buffering the next int.
-		App.scanner.nextLine();
-		
-		this.status = status;
 	}
 
 	/* Create new ticket in system */
@@ -123,35 +122,20 @@ public class Ticket {
 
 		return;
 	}
-
-
-	// To String override for testing
-	@Override
-	public String toString() {
-		return String.format("Status - %s, Severity - %s, Service Desk - %s, Description - %s, Created - %s", 
-				this.status, this.severity, this.serviceDesk, this.description, this.created_at);
+	
+	public void printStaffTicket(String technician_name) {
+		DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy h:mma");
+		
+		System.out.println(String.format("| %-10d | %-25s | %-10s | %-25s | %-60s", 
+				this.id , Formatter.format(this.created_at), this.severity, technician_name , this.description));
 	}
 	
-	public void closeTicket() {
+	public void printTechnicianTicket(int counter) {
+		DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy h:mma");
 		
-		this.status = Status.Closed;
-		this.closed_at = LocalDateTime.now();
+		System.out.println(String.format("| %-10d | %-10d | %-25s | %-10s | %-25s | %-15s | %-60s", 
+				counter , this.id ,Formatter.format(this.created_at), this.severity, this.status,this.archived.toString(), this.description));
 	}
-
-	public LocalDateTime getClosedTime() {
-		
-		return this.closed_at;
-	}
-
-	public void archiveTicket() {
-		this.archived = true;
-		
-	}
-
-	public Status getStatus() {
-		return this.status;
-	}
-
 
 
 

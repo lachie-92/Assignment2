@@ -1,5 +1,5 @@
 package Models;
 
 public enum Role {
-	Staff, Technician
+	Staff, Technician, SystemOwner
 }
